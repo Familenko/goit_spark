@@ -1,21 +1,13 @@
-import os
-
-os.environ["PYTHONUNBUFFERED"] = "1"
-os.environ["JAVA_HOME"] = "/opt/homebrew/opt/openjdk@17"
-os.environ["SPARK_HOME"] = "/opt/homebrew/Cellar/apache-spark/4.0.0/libexec"
-os.environ["PATH"] = os.environ["JAVA_HOME"] + "/bin:" + os.environ["SPARK_HOME"] + "/bin:" + os.environ["PATH"]
-
-
 from pyspark.sql import SparkSession
 
 # Створюємо сесію Spark
 spark = SparkSession.builder.appName("MyGoitSparkSandbox").getOrCreate()
 
 # Завантажуємо датасет
-nuek_df = spark.read.csv('./nuek-vuh3.csv', header=True)
+nuek_df = spark.read.csv('data/nuek-vuh3.csv', header=True)
 
 # Завантажуємо датасет альтернативним методом (див. примітку нижче)
-nuek_alt_read_df = spark.read.format("csv").option("header", "true").load('./nuek-vuh3.csv')
+nuek_alt_read_df = spark.read.format("csv").option("header", "true").load('data/nuek-vuh3.csv')
 
 # Виводимо перші 10 записів
 nuek_df.show(10)
